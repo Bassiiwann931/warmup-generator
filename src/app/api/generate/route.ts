@@ -1,16 +1,16 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest, NextResponse } from "next/server";
 
-const client = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-});
-
 const SYSTEM_PROMPT = `You are a senior email deliverability consultant.
 Return ONLY valid JSON with this structure: { summary, duration, keyRules[],
 weeklyPlan[{week, dailyVolume, totalVolume, minOpenRate, segments, focus,
 warning}], ispTips{gmail,outlook,yahoo}, redFlags[], successMetrics[] }`;
 
 export async function POST(req: NextRequest) {
+  const client = new Anthropic({
+    apiKey: process.env.ANTHROPIC_API_KEY,
+  });
+
   try {
     const body = await req.json();
 
