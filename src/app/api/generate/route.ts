@@ -1,6 +1,8 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest, NextResponse } from "next/server";
 
+export const maxDuration = 60;
+
 const SYSTEM_PROMPT = `You are a senior email deliverability consultant.
 Return ONLY valid JSON with this structure: { summary, duration, keyRules[],
 weeklyPlan[{week, dailyVolume, totalVolume, minOpenRate, segments, focus,
@@ -47,7 +49,7 @@ Make warnings specific and actionable.`;
 
     const message = await client.messages.create({
       model: "claude-sonnet-4-5",
-      max_tokens: 2000,
+      max_tokens: 1024,
       system: SYSTEM_PROMPT,
       messages: [
         {
